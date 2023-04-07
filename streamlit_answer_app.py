@@ -7,8 +7,8 @@ import pandas as pd
 import numpy as np
 
 # Load the preprocessed data
-df=pd.read_csv("C://asktaloes_datset//BankFAQs.csv")
-df1=pd.read_csv("C://asktaloes_datset//BankFAQs1.csv",encoding='ISO-8859-1')
+df=pd.read_csv("C:\\asktaloes_datset\\BankFAQs.csv")
+df1=pd.read_csv("C:\\asktaloes_datset\\BankFAQs1.csv",encoding='ISO-8859-1')
 
 data1=pd.concat([df1,df])
 
