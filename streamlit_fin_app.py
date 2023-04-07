@@ -1,14 +1,24 @@
+from flask import Flask, request, jsonify, render_template
 import streamlit as st
-import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.svm import SVC
+import pandas as pd
 import numpy as np
+import os
+
+# Get the path of the file "BankFAQs.csv"
+path = os.path.join(os.getcwd(), "BankFAQs.csv")
+
+# Check if the file exists
+if not os.path.isfile(path):
+    raise ValueError("File not found: BankFAQs.csv")
 
 # Load the preprocessed data
-df = pd.read_csv('BankFAQs.csv')
-df1 = pd.read_csv('BankFAQs1.csv', encoding='ISO-8859-1')
-data1 = pd.concat([df1, df])
+df=pd.read_csv(path)
+df1=pd.read_csv("C://asktaloes_datset//BankFAQs1.csv",encoding='ISO-8859-1')
+
+data1=pd.concat([df1,df])
 
 # Define the TD-IDF vectorizer and fit it to the data
 tdidf = TfidfVectorizer()
@@ -45,10 +55,24 @@ def get_answer(question):
     
     return response
 
-# Define the Streamlit app
-def app():
-    st.title('Banking FAQ Chatbot')
-    question = st.text_input('Enter your question')
-    if st.button('Get answer'):
-        response = get_answer(question)
-        st.write(response['answer'])
+# Create a Flask app
+app = Flask(__name__,template_folder='template')
+
+# Define the route for the chatbot web interface
+@app.route('/')
+def index():
+    return render_template('bank.html')
+
+# Define the API route for predicting answers
+@app.route('/predict', methods=['POST'])
+def predict():
+    # Get the question from the request
+    question = request.form['question']
+
+    # Get the answer to the question
+    response = get_answer(question)
+    
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run(debug=True,use_reloader=False)
