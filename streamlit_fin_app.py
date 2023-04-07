@@ -10,25 +10,25 @@ import os
 import pandas as pd
 
 # Get the current working directory
-cwd = os.getcwd()
+#cwd = os.getcwd()
 
 # Construct the file path using a relative path
-file_path = os.path.join(cwd, "BankFAQs1.csv")
+#file_path = os.path.join(cwd, "BankFAQs1.csv")
 
 # Read the CSV file using pandas
-df1 = pd.read_csv(file_path, encoding='ISO-8859-1')
+#df1 = pd.read_csv(file_path, encoding='ISO-8859-1')
 # Get the path of the file "BankFAQs.csv"
-path = os.path.join(os.getcwd(), "BankFAQs.csv")
+#path = os.path.join(os.getcwd(), "BankFAQs.csv")
 
 # Check if the file exists
-if not os.path.isfile(path):
-    raise ValueError("File not found: BankFAQs.csv")
+#if not os.path.isfile(path):
+    #raise ValueError("File not found: BankFAQs.csv")
 
 # Load the preprocessed data
-df=pd.read_csv(path)
-df1=pd.read_csv("C://asktaloes_datset//BankFAQs1.csv",encoding='ISO-8859-1')
+#df=pd.read_csv(path)
+#df1=pd.read_csv("C://asktaloes_datset//BankFAQs1.csv",encoding='ISO-8859-1')
 
-data1=pd.concat([df1,df])
+#data1=pd.concat([df1,df])
 
 # Define the TD-IDF vectorizer and fit it to the data
 tdidf = TfidfVectorizer()
