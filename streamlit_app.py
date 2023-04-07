@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[1]:
-
+import streamlit as st 
 
 from flask import Flask, request, jsonify
 import pandas as pd
