@@ -6,7 +6,17 @@ from sklearn.svm import SVC
 import pandas as pd
 import numpy as np
 import os
+import os
+import pandas as pd
 
+# Get the current working directory
+cwd = os.getcwd()
+
+# Construct the file path using a relative path
+file_path = os.path.join(cwd, "BankFAQs1.csv")
+
+# Read the CSV file using pandas
+df1 = pd.read_csv(file_path, encoding='ISO-8859-1')
 # Get the path of the file "BankFAQs.csv"
 path = os.path.join(os.getcwd(), "BankFAQs.csv")
 
