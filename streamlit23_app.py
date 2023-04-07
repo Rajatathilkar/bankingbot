@@ -1,44 +1,41 @@
-from flask import Flask, request, jsonify
 import streamlit as st
+from flask import Flask, request, jsonify, render_template
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Load the SVM model and the TF-IDF vectorizer
+with open('svm_model2.pkl', 'rb') as f:
+    svm_model2 = pickle.load(f)
+with open('tfidf_vec.pkl', 'rb') as f:
+    tfidf_vec = pickle.load(f)
 
 # Define the Flask app
 app = Flask(__name__)
 
-# Define the Flask routes
+# Define the routes
 @app.route('/')
 def home():
-    return 'Hello, world!'
+    return render_template('home.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get the data from the POST request
-    data = request.get_json(force=True)
+    # Get the user's question from the form
+    question = request.form['question']
 
-    # Perform some processing on the data
-    result = data['input'] + 5
+    # Use the vectorizer to transform the question into a vector
+    question_vec = tfidf_vec.transform([question])
 
-    # Return the result as a JSON response
-    return jsonify({'output': result})
+    # Use the SVM model to generate an answer
+    answer = svm_model2.predict(question_vec)[0]
 
-# Define the Streamlit app
-def main():
-    st.title('My App')
+    # Return the answer to the user
+    return render_template('predict.html', answer=answer)
 
-    # Define the input widget
-    input_value = st.number_input('Enter a number')
-
-    # Send the input to the Flask app and get the response
-    response = requests.post('http://localhost:5000/predict', json={'input': input_value})
-
-    # Get the output from the Flask app
-    output_value = response.json()['output']
-
-    # Display the output in the Streamlit app
-    st.write('Output:', output_value)
+# Run the Flask app in the Streamlit app
+def run():
+    with st.spinner('Loading model...'):
+        # Run the app
+        app.run(port=8000)
 
 if __name__ == '__main__':
-    # Start the Flask app in a separate thread
-    app.run(debug=True, use_reloader=False)
-
-    # Start the Streamlit app
-    main()
+    run()
