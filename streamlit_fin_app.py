@@ -8,6 +8,26 @@ import numpy as np
 import os
 import os
 import pandas as pd
+# Get the path of the file "BankFAQs.csv"
+path = os.path.join(os.getcwd(), "BankFAQs.csv")
+
+# Check if the file exists
+if not os.path.isfile(path):
+    raise ValueError("File not found: BankFAQs.csv")
+
+# Load the preprocessed data
+df=pd.read_csv(path)
+df1=pd.read_csv("C://asktaloes_datset//BankFAQs1.csv",encoding='ISO-8859-1')
+
+data1=pd.concat([df1,df])
+
+# Define the TD-IDF vectorizer and fit it to the data
+tdidf = TfidfVectorizer()
+tdidf.fit(data1['Question'].str.lower())
+
+# Define the support vector machine model and fit it to the data
+svc_model = SVC(kernel='linear')
+svc_model.fit(tdidf.transform(data1['Question'].str.lower()), data1['Class'])
 
 # Get the current working directory
 #cwd = os.getcwd()
