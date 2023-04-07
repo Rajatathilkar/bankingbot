@@ -67,13 +67,26 @@ def chatbot():
     #return render_template('layout.html', messages=messages)
     
     
-def get_answer(category):
+#def get_answer(category):
+import streamlit as st
+
+# Define a function to generate a response
+def get_answer(question):
+    return 'This is the answer to your question: {}'.format(question)
+
+# Create a text input for the user to enter their question
+question = st.text_input('Enter your question here')
+
+# If the user enters a question, generate a response and display it
+if question:
+    answer = get_answer(question)
+    st.write(answer)
     
     
         
-    return'this is the answer for category {}'.format(category)
-if __name__ == '__main__':
-    app.run(debug=True,use_reloader=False)
+    #return'this is the answer for category {}'.format(category)
+#if __name__ == '__main__':
+    #app.run(debug=True,use_reloader=False)
 
 
 # In[ ]:
