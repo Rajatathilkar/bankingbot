@@ -17,7 +17,7 @@ if not os.path.isfile(path):
 
 # Load the preprocessed data
 df=pd.read_csv(path)
-df1=pd.read_csv("C://asktaloes_datset//BankFAQs1.csv",encoding='ISO-8859-1')
+df1=pd.read_csv("./BankFAQs1.csv",encoding='ISO-8859-1')
 
 data1=pd.concat([df1,df])
 
